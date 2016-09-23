@@ -23,13 +23,9 @@ key points:
 
 # Introduction
 
-key points:
-- HT screening data are necessary for systematically interrogating biology. Statistical analysis of HT data is most commonly done with NHST, with multiple hypothesis testing corrections applied. Interpretation of the p-values returned depends on the intent of the experimenter (Kruschke), and the interpretation of the confidence intervals is contrived and unnatural.
-- Posterior distributions computed based on Bayesian approaches provide a much more natural interpretation than frequentist. Because HT assays are at their essence 'measurements relative to a standard control', we can extend Kruschke's two-sample framework to multiple samples, and obtain proper estimation of values of interest *and* the uncertainty associated with it.
-- Bayesian inference is a much more natural alternative, but it has generally been inaccessible to the general life science experimentalist; multiple comparisons are also not an issue (Kruschke).
-- We do two things:
-    - (1) extend Krushke's two-sample comparison method to fold changes (most common in HT analysis)
-    - (2) provide open source software with UI to aid other researchers in conducting inference.
+High throughput (HT) screening experiments are necessary for systematically interrogating biology. Statistical tools have been developed for HT data analysis, for example, the Z- and Z'-factors [@Zhang:1999fr; @Edwards:2015ig; @Lee:2010if; @Sui:2007dc], per-plate Z-score normalization [@Malo:2006kg], ANOVA [@Su:2010gb] and the "three standard deviation" (3-SD) rule-of-thumb [@Zhang:1999fr]. These statistical tools would be useful, if not for the widespread use of small sample sizes [@Edwards:2015ig; @Wang:2015ba] risking the measurement of false positives and negatives.
+
+Crucially missing from the HT literature are general and extensible Bayesian analysis methods for HT assays. Bayesian methods offer several advantages over the traditional Null Hypothesis Significance Testing (NHST) [@Kruschke:2013jy], including the ability to incorporate prior knowledge where appropriate, model and quantify uncertainty in estimated values. As Bayesian analysis returns a full probabilistic description of the data, multiple hypothesis testing is not an issue as any further comparisons are merely extended summaries of the probabilistic output.
 
 potential references:
 
