@@ -3,7 +3,13 @@ title: Simple Bayesian Analysis of High Throughput Biological Measurement Data
 authors:
   - name: Eric J. Ma
     affiliation: MIT
-target_journal: nature_methods, pnas, elife, biostatistics, plos_comp_bio, plos_one
+  - name: Vivian J. Zhong
+    affiliation: MIT
+  - name: Islam T. M. Hussein
+    affiliation: MIT
+  - name: Jonathan A. Runstadler
+    affiliation: MIT
+target_journal: pnas, plos_comp_bio, biostatistics, plos_one
 ---
 
 # Abstract
