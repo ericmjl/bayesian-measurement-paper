@@ -55,9 +55,10 @@ If carefully considered, the problem of high throughput measurement at it essenc
 ## Modelled Error in estimate as function of number of replicates
 
 key points:
+
 - result: variance in error (modelled mean - real mean) decreases with increasing replicate measurements.
 - n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
-- in general, fold change estimate precision increases with number of samples; error decreases.
+- in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
 ## Dealing with outliers
 
@@ -65,6 +66,7 @@ key points:
 ## Small-scale real-world measurement data.
 
 key points:
+
 - put analysis of polymerase assay data here; can even just be Vivian's replication data and that would be sufficient.
 
 # Discussion
@@ -74,6 +76,7 @@ key points:
 ## "Precision is the goal"
 
 key points:
+
 - `n=3` + NHST has led to the proliferation of false positive results in the literature.
 - `n=some_value` + bayesian can let us identify measurements that have a high degree of uncertainty/variation.
 - decision rule is possible: check that 95% HPDs are non-overlapping. alternatively, have a pre-defined ROPE (Kruschke). emphasize: no free lunch.
