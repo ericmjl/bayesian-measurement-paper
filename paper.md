@@ -1,5 +1,5 @@
 ---
-title: Bayesian Analysis of High Throughput Biological Measurement Data
+title: Simple Bayesian Analysis of High Throughput Biological Measurement Data
 authors:
   - name: Eric J. Ma
     affiliation: MIT
