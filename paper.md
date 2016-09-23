@@ -15,9 +15,11 @@ target_journal: pnas, plos_comp_bio, biostatistics, plos_one
 # Abstract
 
 key points:
-- simple framework for analysis
-- accompanying software that loads CSV files
-- instructions on how to use software
+
+- describe a simple and accessible framework for HT analysis that is sorely missing from the literature. covers the following:
+    - Bayesian estimation of fold changes relative to some control, with decision rule for a hit.
+- approach: rather than analytical, use probabilistic programming, with approx. inference tools used.
+- accompanying software that analyzes fold change data in an accessible fashion (?)
 
 # Introduction
 
