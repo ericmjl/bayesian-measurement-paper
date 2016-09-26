@@ -23,7 +23,7 @@ sge_header = """
 
 """
 
-num_replicate_samples = np.arange(2, 20)
+num_replicate_samples = np.arange(2, 21)
 
 # Write one bash script for each simulation.
 for n in num_replicate_samples:
