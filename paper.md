@@ -54,7 +54,7 @@ To address the problem of a lack of Bayesian analysis methods, we use a probabil
 
 If carefully considered, the problem of high throughput measurement at it essence is the measurement and estimation of a sample's real-valued property, relative to a standardized control. These are measured relative to a "blank" that should reliably exhibit an instrument signal below its lower limit of detection.
 
-As a concrete example, consider the problem of systematically characterizing a protein mutant family. A standard design for this experiment might involve the following:
+As a concrete example, consider the problem of systematically characterizing a protein mutant family. A standard design for this experiment might involve the following (Figure @fig:assay-scheme):
 
 1. A blank well to define lower instrument detection limit
 1. A negative control which forms a biological baseline measurement (e.g. reporter plasmid transfected without protein of interest), which may or may not return the same value as the blank.
