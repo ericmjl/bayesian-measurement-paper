@@ -21,6 +21,7 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
             print(' n_reps: {0},\n simulation number: {1}\n'.format(n_reps, sim))
             sim_data = make_simulated_data(n_genotypes=n_genotypes, n_reps=n_reps)
             data, indices, num_measurements, means, sds = sim_data
+            print(indices)
             model = make_model(n_genotypes, data, indices)
             trace = sample_model(model, n_genotypes)
 
