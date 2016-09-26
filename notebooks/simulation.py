@@ -27,7 +27,14 @@ num_replicate_samples = np.arange(2, 20)
 
 # Write one bash script for each simulation.
 for n in num_replicate_samples:
-    with open('simulation_results/{0}_reps.sh'.format(n), 'w') as f:
+    with open('sim_results/{0}_reps.sh'.format(n), 'w') as f:
         f.write(sge_header)
         f.write('cd ..\n')
-        f.write('python model.py --n_reps={0} --n_sims=10'.format(n))
+        f.write('python model.py --n_reps={0} --n_sims=20\n'.format(n))
+
+
+# Write master script
+with open('sim_results/master.sh', 'w') as f:
+    f.write(sge_header)
+    for n in num_replicate_samples:
+        f.write('qsub {0}_reps.sh\n'.format(n))
