@@ -67,7 +67,7 @@ In this setup, the blanks and controls are measured on every single plate, provi
 
 Firstly, the limit of detection is not assigned a zero-value, but assigned the relative value of "1" instead. Data that can be used to model uncertainty of the blank is done by taking ensuring that there are two blank wells on the plate. One of the wells is considered "true blank", and the other is treated as a measurement for quantification of the technical uncertainty in the blank well; it does not matter which is used.
 
-Secondly, the samples {`i = 1, 2, 3, ... n, pc, nc, b`} and controls have their raw readings `r` normalized to the "true blank" `tb`. This allows every reading to be normalized to (i.e. divided by) the lower limit of detection, with the smallest value being 1. The fold relative to blank `µ` is given by Equation @eq:fold_blank, where `i` encompasses all samples, the controls, and the replicate blank. This normalized value is used for modelling the error in the fold changes. On each plate, each well gets at least a single replicate measurement; if there is space for duplicates, each replicate is considered an independent measurement of the activity relative to blank, rather than a value to be averaged.
+Secondly, the samples `{i = 1, 2, 3, ... n, pc, nc, b}` and controls have their raw readings `r` normalized to the "true blank" `tb`. This allows every reading to be normalized to (i.e. divided by) the lower limit of detection, with the smallest value being 1. The fold relative to blank `µ` is given by Equation @eq:fold_blank, where `i` encompasses all samples, the controls, and the replicate blank. This normalized value is used for modelling the error in the fold changes. On each plate, each well gets at least a single replicate measurement; if there is space for duplicates, each replicate is considered an independent measurement of the activity relative to blank, rather than a value to be averaged.
 
 $$ \mu_i = \frac{r_i}{r_{tb}} $$ {#eq:fold_blank}
 
@@ -87,9 +87,9 @@ $$ \mu_{i} \sim Uniform(lower=10^{-10}, upper=u) $$ {#eq:fold}
 
 This places a positive real-valued prior on the master fold change distribution.
 
-The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a `gamma` distribution, likewise also placing a positive and real-valued but essentially flat prior on the error.
+The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a `gamma` distribution, likewise also placing a positive and real-valued prior with high variance, expressing our prior belief that the variance should be low but could also take high values.
 
-$$ \sigma_{i} \sim Gamma(\alpha=1, \beta=1) $$ {#eq:sigma}
+$$ \sigma_{i} \sim Gamma(\alpha=1, \beta=1000) $$ {#eq:sigma}
 
 The data likelihood `L` is modelled as a Normal distribution:
 
@@ -97,7 +97,7 @@ $$ L \sim Normal(\mu=\mu_{i}, \sigma=\sigma_{i}) $$ {#eq:likelihood}
 
 This model is expressed as a probabilistic graphical model (PGM) in Figure @fig:pgm.
 
-![Bayesian hierarchical model.](./figures/pgm-temp.jpg){#fig:pgm}
+![Bayesian hierarchical model.](./figures/pgm.png){#fig:pgm}
 
 Having modelled these variables, we can now deterministically compute fold changes and their full distributional uncertainty, given the data. If the positive control were of interest as a "reference" standard, then the fold change `f` of each sample `s` relative to the positive control `pc` could be computed as:
 
