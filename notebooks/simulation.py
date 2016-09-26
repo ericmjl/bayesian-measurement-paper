@@ -26,4 +26,4 @@ sge_header = """
 # Write master script
 with open('sim_results/master.sh', 'w') as f:
     f.write(sge_header)
-    f.write('python model.py --max_n_reps=21 --n_sims=20\n'.format(n))
+    f.write('python model.py --max_n_reps=21 --n_sims=20\n')
