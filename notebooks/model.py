@@ -6,9 +6,9 @@ import click
 import pickle as pkl
 
 @click.command()
-@click.option('--n_reps', default=2, help="Number of replicate samples.")
+@click.option('--max_n_reps', default=2, help="Number of replicate samples.")
 @click.option('--n_sims', default=10, help="Number of replicate simulations.")
-def run_fract_correct_simulations(n_reps, n_sims):
+def run_fract_correct_simulations(max_n_reps, n_sims):
     """
     n = the number of replicates samples for each.
     n_simulations = the number of replicate simulations to run
@@ -16,18 +16,19 @@ def run_fract_correct_simulations(n_reps, n_sims):
     n_reps_data = list()
     fraction_correct_data = list()
     n_genotypes = 100
-    for sim in range(n_sims):
-        print(' n_reps: {0},\n simulation number: {1}\n'.format(n_reps, sim))
-        sim_data = make_simulated_data(n_genotypes=n_genotypes, n_reps=n_reps)
-        data, indices, num_measurements, means, sds = sim_data
-        model = make_model(n_genotypes, data, indices)
-        trace = sample_model(model, n_genotypes)
+    for n_reps in range(max_n_reps):
+        for sim in range(n_sims):
+            print(' n_reps: {0},\n simulation number: {1}\n'.format(n_reps, sim))
+            sim_data = make_simulated_data(n_genotypes=n_genotypes, n_reps=n_reps)
+            data, indices, num_measurements, means, sds = sim_data
+            model = make_model(n_genotypes, data, indices)
+            trace = sample_model(model, n_genotypes)
 
-        lower, upper = np.percentile(trace['fold'], [2.5, 97.5], axis=0)
-        frac_correct = sum((means > lower) * (means < upper)) / len(means)
+            lower, upper = np.percentile(trace['fold'], [2.5, 97.5], axis=0)
+            frac_correct = sum((means > lower) * (means < upper)) / len(means)
 
-        fraction_correct_data.append(frac_correct)
-        n_reps_data.append(n_reps)
+            fraction_correct_data.append(frac_correct)
+            n_reps_data.append(n_reps)
 
     with open('sim_results/{0}_reps.pkl'.format(n_reps), 'wb') as f:
         pkl.dump((n_reps_data, fraction_correct_data), f)
