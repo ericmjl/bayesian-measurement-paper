@@ -79,7 +79,7 @@ Using this experimental setup ensures that batch effects are accounted for in th
 
 With this data on hand, we now consider the Bayesian hierarchical model. While it is possible to use informative prior information on the data, we consider here the "worst case" scenario in which little to nothing is confidently known about the distribution of fold changes and errors for individual samples, except that they may be drawn from a common distribution that is likewise not well defined. Hence, priors are specified as uninformatively as possible.
 
-We assume that the fold changes relative to blank are drawn from a uniform distribution from 10^-9^ to some value `u` (+@eq:fold), essentially behaving as a flat positive-valued prior, while allowing for uncertainty in the blank measurement. In order to use the data to estimate the upper limit of detection, we place a positive real-valued HalfCauchy prior on it +@eq:upper.
+We assume that the fold changes relative to blank are drawn from a uniform distribution from 10^-10^ to some value `u` (+@eq:fold), essentially behaving as a flat positive-valued prior, while allowing for uncertainty in the blank measurement. In order to use the data to estimate the upper limit of detection, we place a positive real-valued HalfCauchy prior on it +@eq:upper.
 
 $$ u \sim HalfCauchy(\tau=10) $$ {#eq:upper}
 
@@ -129,7 +129,9 @@ key points:
 - n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
 - in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
-## Dealing with outliers
+## Simulated outlier plates with systematic error on the entire plate.
+
+## Simulated outlier wells with random dropout.
 
 ## Small-scale real-world measurement data.
 
