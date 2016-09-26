@@ -29,7 +29,7 @@ def run_fract_correct_simulations(n_reps, n_sims):
         fraction_correct_data.append(frac_correct)
         n_reps_data.append(n_reps)
 
-    with open('simulation_results/{0}_reps.pkl'.format(n_reps), 'wb') as f:
+    with open('sim_results/{0}_reps.pkl'.format(n_reps), 'wb') as f:
         pkl.dump((n_reps_data, fraction_correct_data), f)
 
 def plot_forestplots(trace):
@@ -49,9 +49,9 @@ def plot_forestplots(trace):
 def sample_model(model, n_genotypes):
     with model:
         if n_genotypes <= 10:
-            n_steps = 150000
-        elif n_genotypes > 10:
             n_steps = 200000
+        elif n_genotypes > 10:
+            n_steps = 500000
         params = pm.variational.advi(n=n_steps)
         trace = pm.variational.sample_vp(params, draws=2000)
 
