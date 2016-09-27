@@ -18,7 +18,7 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
     n_genotypes = 100
     for n_reps in range(2, max_n_reps):
         for sim in range(n_sims):
-            print(' n_reps:  {0},\n simulation number: {1}'.format(n_reps, sim))
+            print(' n_reps:  {0},\n simulation number: {1}\n'.format(n_reps, sim))
             sim_data = make_simulated_data(n_reps=n_reps, n_genotypes=n_genotypes)
             data, indices, num_measurements, means, sds = sim_data
             model = make_model(n_genotypes, data, indices)
@@ -29,8 +29,8 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
 
             fraction_correct_data.append(frac_correct)
             n_reps_data.append(n_reps)
-            print('fraction correct: {0}\n\n'.format(frac_correct))
-    with open('sim_results/max_{0}_reps_{1}_sims.pkl'.format(max_n_reps, n_sims), 'wb') as f:
+            print('fraction correct: {0}'.format(frac_correct))
+    with open('sim_results/max_{0}_reps_{1}_sims.pkl'.format(max_n_reps, ), 'wb') as f:
         pkl.dump((n_reps_data, fraction_correct_data), f)
 
 def plot_forestplots(trace):
@@ -90,13 +90,11 @@ def make_model(n_genotypes, data, indices):
 
     return model
 
-def make_simulated_data(n_reps_low, n_genotypes, n_reps_high=None):
+def make_simulated_data(n_reps, n_genotypes):
     means = npr.randint(low=10, high=100, size=n_genotypes)
     means = means * (means > 0)  # negative activities are not captured
     sds = npr.random(size=n_genotypes) * 10
-    if not n_reps_high:
-        n_reps_high = n_reps_low + 1
-    num_measurements = npr.randint(low=n_reps_low, high=n_reps_high, size=n_genotypes)
+    num_measurements = npr.randint(low=n_reps, high=n_reps+1, size=n_genotypes)
 
     # Create simulated data.
     data = []
