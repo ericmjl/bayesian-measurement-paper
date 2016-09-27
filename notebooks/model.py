@@ -90,11 +90,13 @@ def make_model(n_genotypes, data, indices):
 
     return model
 
-def make_simulated_data(n_reps, n_genotypes):
+def make_simulated_data(n_reps_low, n_genotypes, n_reps_high=None):
     means = npr.randint(low=10, high=100, size=n_genotypes)
     means = means * (means > 0)  # negative activities are not captured
     sds = npr.random(size=n_genotypes) * 10
-    num_measurements = npr.randint(low=n_reps, high=n_reps+1, size=n_genotypes)
+    if not n_reps_high:
+        n_reps_high = n_reps_low + 1
+    num_measurements = npr.randint(low=n_reps_low, high=n_reps_high, size=n_genotypes)
 
     # Create simulated data.
     data = []
