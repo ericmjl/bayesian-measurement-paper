@@ -129,6 +129,16 @@ key points:
 - n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
 - in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
+## Accuracy as a function of number of replicates
+
+In order to investigate how the number of replicates affected the accuracy, we simulated experimental runs of 100 samples with varying numbers replicate measurements (n=2 to n=20). For each `n`, 20 experimental runs were simulated.
+
+As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls in the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=YYYYYY` replicates, the accurate HPD fraction falls in the 93-98% reange. This means that one can reduce by 5- to 6-fold the number of errors measured as compared with the bare minimum of `n=2` replicates.
+
+## Bayesian Z- and Z'-factors
+
+This approach provides 95% HPDs on the Z- and Z'-factors.
+
 ## Simulated outlier plates with systematic error on the entire plate.
 
 ## Simulated outlier wells with random dropout.
