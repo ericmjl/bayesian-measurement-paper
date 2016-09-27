@@ -17,7 +17,7 @@ sge_header = """
 #$ -V
 #$ -m e
 #$ -M ericmjl@mit.edu
-#$ -pe whole_nodes 1
+#$ -pe whole_nodes 8
 #############################################
 
 
@@ -27,4 +27,4 @@ sge_header = """
 with open('sim_results/master.sh', 'w') as f:
     f.write(sge_header)
     f.write('cd ..\n')
-    f.write('python model.py --max_n_reps=21 --n_sims=20\n')
+    f.write('python model.py --max_n_reps=21 --n_sims=20 \n')
