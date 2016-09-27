@@ -16,12 +16,11 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
     n_reps_data = list()
     fraction_correct_data = list()
     n_genotypes = 100
-    for n_reps in range(max_n_reps):
+    for n_reps in range(2, max_n_reps):
         for sim in range(n_sims):
             print(' n_reps:  {0},\n simulation number: {1}\n'.format(n_reps, sim))
             sim_data = make_simulated_data(n_reps=n_reps, n_genotypes=n_genotypes)
             data, indices, num_measurements, means, sds = sim_data
-            print(indices)
             model = make_model(n_genotypes, data, indices)
             trace = sample_model(model, n_genotypes)
 
@@ -92,7 +91,6 @@ def make_model(n_genotypes, data, indices):
     return model
 
 def make_simulated_data(n_reps, n_genotypes):
-    print(n_reps, n_genotypes)
     means = npr.randint(low=10, high=100, size=n_genotypes)
     means = means * (means > 0)  # negative activities are not captured
     sds = npr.random(size=n_genotypes) * 10
@@ -114,7 +112,6 @@ def make_simulated_data(n_reps, n_genotypes):
 
         data.extend(measurements.tolist())
         indices.extend([i] * n)
-    print(indices)
 
     # Add baseline measurements (bl_measures)
     n_bl_measures = n_reps
@@ -138,7 +135,6 @@ def make_simulated_data(n_reps, n_genotypes):
 
     # convert indices to a numpy array
     indices = np.array(indices)
-    # print(indices)
 
     return data, indices, num_measurements, means, sds,
 
