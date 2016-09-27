@@ -18,7 +18,7 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
     n_genotypes = 100
     for n_reps in range(2, max_n_reps):
         for sim in range(n_sims):
-            print(' n_reps:  {0},\n simulation number: {1}\n'.format(n_reps, sim))
+            print(' n_reps:  {0},\n simulation number: {1}'.format(n_reps, sim))
             sim_data = make_simulated_data(n_reps=n_reps, n_genotypes=n_genotypes)
             data, indices, num_measurements, means, sds = sim_data
             model = make_model(n_genotypes, data, indices)
@@ -29,8 +29,8 @@ def run_fract_correct_simulations(max_n_reps, n_sims):
 
             fraction_correct_data.append(frac_correct)
             n_reps_data.append(n_reps)
-
-    with open('sim_results/{0}_reps.pkl'.format(n_reps), 'wb') as f:
+            print('fraction correct: {0}\n\n'.format(frac_correct))
+    with open('sim_results/max_{0}_reps_{1}_sims.pkl'.format(max_n_reps, n_sims), 'wb') as f:
         pkl.dump((n_reps_data, fraction_correct_data), f)
 
 def plot_forestplots(trace):
@@ -52,7 +52,7 @@ def sample_model(model, n_genotypes):
         if n_genotypes <= 10:
             n_steps = 200000
         elif n_genotypes > 10:
-            n_steps = 500000
+            n_steps = 300000
         params = pm.variational.advi(n=n_steps)
         trace = pm.variational.sample_vp(params, draws=2000)
 
