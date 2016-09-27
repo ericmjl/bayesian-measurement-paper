@@ -135,6 +135,8 @@ In order to investigate how the number of replicates affected the accuracy, we s
 
 As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls in the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=YYYYYY` replicates, the accurate HPD fraction falls in the 93-98% reange. This means that one can reduce by 5- to 6-fold the number of errors measured as compared with the bare minimum of `n=2` replicates.
 
+![Accuracy of 95% HPD as a function of number of replicate samples taken.](./figures/accuracy.pdf){#fig:accuracy}
+
 ## Bayesian Z- and Z'-factors
 
 This approach provides 95% HPDs on the Z- and Z'-factors.
