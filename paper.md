@@ -1,14 +1,14 @@
 ---
 title: Simple Bayesian Analysis of High Throughput Biological Measurement Data
 author:
-    - name: Eric J. Ma
-      affiliation: MIT
-    - name: Islam T. M. Hussein
-      affiliation: MIT
-    - name: Vivian J. Zhong
-      affiliation: MIT
-    - name: Jonathan A. Runstadler
-      affiliation: MIT
+  - name: Eric J. Ma
+    affiliation: MIT
+  - name: Islam T. M. Hussein
+    affiliation: MIT
+  - name: Vivian J. Zhong
+    affiliation: MIT
+  - name: Jonathan A. Runstadler
+    affiliation: MIT
 target_journal: pnas, plos_comp_bio, biostatistics, plos_one
 template: default.latex
 toc: True
@@ -123,7 +123,7 @@ We first considered how the number of replicate measurements per sample affected
 
 ## Accuracy as a function of number of replicates
 
-In order to investigate how the number of replicates affected the accuracy, we simulated experimental runs of 100 samples with varying numbers replicate measurements (n=2 to n=20). For each `n`, 20 experimental runs were simulated.
+In order to investigate how the number of replicates affected the accuracy, we simulated experimental runs of 100 samples with varying numbers replicate measurements (`n=2` to `n=20`). For each `n`, 20 experimental runs were simulated.
 
 As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls around the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=5` replicates, the accurate HPD fraction falls around the 85-90% range. Roughly doubling the number of samples decreases the inaccurate fraction by up to 3-fold. Following the law of diminishing marginal returns, additional accuracy can be gained, but at a cost of increasing sample sizes.
 
@@ -131,11 +131,13 @@ As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fra
 
 ## Posterior Z- and Z'-factor distributions
 
-Z-factors are often used in HT assays to determine, given the data, whether a particular sample is a "hit" or not, where a "hit" is commonly defined as being above the "baseline", or "threshold". With the posterior distributions, we can now compute the full distribution of Z-factor values for each sample. As such, the original 3-class system can be extended to 5 classes (Figure @fig:z-factor).
+Z-factors are often used in HT assays to determine, given the data, whether a particular sample is a "hit" or not, where a "hit" is commonly defined as being above the "baseline", or "threshold". With the posterior distributions, we can now compute the full distribution of Z-factor values for each sample, as shown by our simulation data (Figure @fig:z-factor). As such, the original 3-class system can be extended to 5 classes (Figure @fig:z-factor).
 
-The actionable consequences of these Z-value distributions depends on the experimental context. There may be scenarios where downstream experimentation is expensive, and only "true hits" should be tested; in this case, the "probable large separation" samples may be chosen for exclusion. On the other hand, if downstream experimentation is cheap, and it is desirable to have a large set of samples to be processed further, then samples in the "probable small separation" may be included in downstream testing.
+Our simulation data show how
 
-![Z-score classes.](./figures/z-factor.png){#fig:z-factor}
+![Z-score classes and simulation data. Circle/dot: HPD mean. Thick lines: HPD inter-quartile range. Thin lines: 95% HPD range. (a) Five Z-score classes based on the Z-score posterior density. (b) Data from one simulation run. Samples 11 and 12 are the blank and the non-extreme positive control in this simulated experiment. (top-left) Posterior density in fold change relative to blank. (top-right) Posterior density of variance. (bottom-left) Deterministic posterior density of fold change relative to positive control. (bottom-right) Deterministic posterior density of Z-factor computed using the non-extreme positive control as the baseline.](./figures/z-factor.png){#fig:z-factor}
+
+The actionable consequences of these Z-value distributions depends on the experimental context. There may be scenarios where downstream experimentation is expensive, and only "true hits" should be tested; in this case, the "probable large separation" samples may be chosen for exclusion, helping to reduce costs. On the other hand, if downstream experimentation is cheap, and it is desirable to have a large set of samples to be processed further, then samples in the "probable small separation" may be included in downstream testing, helping to reduce false negatives. The truism remains: statistics does not replace human judgment of the value of a sample, but can serve as a valuable tool in the decision-making process.
 
 ## Simulated outlier plates with systematic error on the entire plate.
 
@@ -149,7 +151,15 @@ key points:
 
 # Discussion
 
-## Outliers
+We have outlined a generic Bayesian framework for analyzing high throughput data, allowing for inter-comparability between instruments in the measurements. By "generic", we refer to the common statistical activity in biological measurement, where a sample's value is compared to another "control" sample, rather than absolute quantitation in some physical units.
+
+The core of the framework lies in obtaining measurements that reflect the "fold difference relative to blank". This is predicated on having "blank" values that are necessarily positive. In the event that negative values are obtained, the data can be linearly pre-shifted such that the most negative blank now takes the value of "1". The cloned blank can then be used in the estimation of the uncertainty around the blank.
+
+The framework is extensible to scenarios that we did not consider here. For example, some research groups may opt to do technical replicates per experimental run, take the average of the technical replicates for a sample, and repeat the procedure over replicate experimental runs.
+
+Using the analysis framework with fairly uninformative priors (with the exception of measurement variation, `sigma`), we use simulation studies to show that the commonplace practice of duplicate or triplicate experimental runs with single replicates per run may result in low estimation accuracy. By simply increasing the number of experimental runs to `n=4` or `n=5`, large gains in measurement accuracy may be realized. We recommend that high throughput experimentation consider larger replicate experimental runs.
+
+One advantage in taking a Bayesian view of the data is that multiple hypothesis corrections do not become an issue, and as such no "conservative" or "liberal" corrections (e.g. Bonferroni) need to be applied that may further increase the risk of false negatives or positives. The posterior densities fully summarize our best belief about the parameters (e.g. fold changes & Z-factors), and so any further comparisons are summaries of the summary. That is not to say that false positives and negatives can be avoided; as measurements are considered to be "random samples" from the true distribution, it is still probable to have biased measurements, and hence posterior densities, purely by random chance [@Kruschke:2013jy]. Nonetheless, the Bayesian view of the data allows us quantify uncertainty and incorporate it in decision-making.
 
 ## "Precision is the goal"
 
@@ -163,6 +173,6 @@ key points:
 ## Software
 
 - to aid in spreading of this idea, we have released the software under an MIT license
-- also provided a GUI interface for specifying priors, with sensible uninformative defaults.
+- also provided a GUI interface for specifying priors and conducting analysis, with sensible uninformative defaults.
 
 # References
