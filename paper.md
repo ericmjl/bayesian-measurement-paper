@@ -117,7 +117,7 @@ All code for simulation and analysis are available as Python scripts and Jupyter
 
 ## Modelled Error in estimate as function of number of replicates
 
-We first considered how the number of replicate measurements per sample affected our ability to accurately measure the true fold change value. We simulated 5000 unique genotypes, each with a different `mu` and `sigma` drawn from their respective distributions, with a range of 2 to 10 replicate measurements. As shown in Figure @fig:errors, the error in the estimated
+We first considered how the number of replicate measurements per sample affected our ability to accurately measure the true fold change value. We simulated 5000 unique genotypes, each with a different `mu` and `sigma` drawn from their respective distributions, with a range of 2 to 10 replicate measurements. As shown in Figure @fig:errors, the error in the estimated fold changes is centred around zero regardless of the number of replicate measurements, but the variation in this error decreases with increasing replicate measurements.
 
 ![(left) Error between estimated fold change as a function of the number of measurements. (right) Variance of the error from left plot.](./figures/errors.png){#fig:errors}
 
@@ -137,7 +137,7 @@ As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fra
 
 ## Bayesian Z- and Z'-factors
 
-Z-factors are often used in HT assays to determine, given a 
+Z-factors are often used in HT assays to determine, given a
 
 ## Simulated outlier plates with systematic error on the entire plate.
 
