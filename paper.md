@@ -131,7 +131,9 @@ As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fra
 
 ## Bayesian Z- and Z'-factors
 
-Z-factors are often used in HT assays to determine, given a
+Z-factors are often used in HT assays to determine, given the data, whether a particular sample is a "hit" or not, where a "hit" is commonly defined as being above the "baseline", or "threshold". With the posterior distributions, we can now compute the full distribution of Z-factor values for each sample. As such, the original 3-class system can be extended to 5 classes (Figure @fig:zscore)
+
+![Z-score classes.](./figures/z-score.png)
 
 ## Simulated outlier plates with systematic error on the entire plate.
 
