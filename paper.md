@@ -103,7 +103,7 @@ Having modelled these variables, we can now deterministically compute fold chang
 
 $$ f_{s} = \frac{\mu_{s}}{\mu_{pc}} $$
 
-Z- and Z'-factors are used for assay evaluation and sample hit identification. With the posterior distribution of estimated fold changes and their variance, the Z- and Z'-factors and their distributional uncertainty may be computed using the formula below [@Zhang:1999fr]:
+Z- and Z'-factors are used for assay evaluation and sample hit identification, relative to a baseline. With the posterior distribution of estimated fold changes and their variance, the Z- and Z'-factors and their distributional uncertainty may be computed using the formula below [@Zhang:1999fr]:
 
 $$ Z = 1 - \frac{3\sigma_{s} + 3\sigma_{b}}{|\mu_{s} - \mu_{b}|} $$
 
@@ -129,9 +129,9 @@ As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fra
 
 ![Accuracy of 95% HPD as a function of number of replicate samples taken.](./figures/accuracy.pdf){#fig:accuracy}
 
-## Bayesian Z- and Z'-factors
+## Posterior Z- and Z'-factor distributions
 
-Z-factors are often used in HT assays to determine, given the data, whether a particular sample is a "hit" or not, where a "hit" is commonly defined as being above the "baseline", or "threshold". With the posterior distributions, we can now compute the full distribution of Z-factor values for each sample. As such, the original 3-class system can be extended to 5 classes (Figure @fig:z-factor). The interpretation of these Z-value distributions
+Z-factors are often used in HT assays to determine, given the data, whether a particular sample is a "hit" or not, where a "hit" is commonly defined as being above the "baseline", or "threshold". With the posterior distributions, we can now compute the full distribution of Z-factor values for each sample. As such, the original 3-class system can be extended to 5 classes (Figure @fig:z-factor). The interpretation of these Z-value distributions depends on the
 
 ![Z-score classes.](./figures/z-factor.png){#fig:z-factor}
 
