@@ -87,7 +87,7 @@ $$ \mu_{i} \sim Uniform(lower=l, upper=u) $$ {#eq:fold}
 
 This places a positive real-valued prior on the master fold change distribution.
 
-The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a HalfCauchy distribution as recommended in [@Anonymous:2006di], expressing our prior belief that the variance should be low but could also take high values.
+The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a HalfCauchy distribution as recommended in [@Gelman:2006di], expressing our prior belief that the variance should be low but could also take high values.
 
 $$ \sigma_{i} \sim HalfCauchy(\tau=5) $$ {#eq:sigma}
 
