@@ -87,7 +87,7 @@ $$ \mu_{i} \sim Uniform(lower=l, upper=u) $$ {#eq:fold}
 
 This places a positive real-valued prior on the master fold change distribution.
 
-The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a HalfCauchy distribution as recommended in [@Anonymous:2006di], expressing our prior belief that the variance should be low but could also take high values.
+The errors `sigma` in fold change measurements are assumed to be heteroskedastic, and drawn from a HalfCauchy distribution as recommended in [@Gelman:2006di], expressing our prior belief that the variance should be low but could also take high values.
 
 $$ \sigma_{i} \sim HalfCauchy(\tau=5) $$ {#eq:sigma}
 
@@ -107,13 +107,9 @@ Likewise, the Z- and Z'-factors and their distributional uncertainty may be comp
 
 $$ Z = 1 - \frac{3\sigma_{s} + 3\sigma_{b}}{|\mu_{s} - \mu_{b}|} $$
 
-## Simulated Data
-
-We used simulation data in our evaluation of the method.
-
 ## Code & Data
 
-All code are available as Python scripts and Jupyter notebooks. The archived version used in this publication is released on Zenodo (#TODO), while the source code (including for the manuscript) can be found on [GitHub](^github).
+All code for simulation and analysis are available as Python scripts and Jupyter notebooks. The archived version used in this publication is released on Zenodo (#TODO), while the source code (including for the manuscript) can be found on [GitHub](^github).
 
 [^github]: https://github.com/ericmjl/bayesian-measurement-paper
 
@@ -121,11 +117,13 @@ All code are available as Python scripts and Jupyter notebooks. The archived ver
 
 ## Modelled Error in estimate as function of number of replicates
 
-We first considered how the number of replicate measurements per sample affected our ability to accurately measure the true fold change value. We simulated 5000 unique genotypes, each with a different `mu` and `sigma` drawn from their respective distributions, with a range of 2 to 10 replicate measurements.
+We first considered how the number of replicate measurements per sample affected our ability to accurately measure the true fold change value. We simulated 5000 unique genotypes, each with a different `mu` and `sigma` drawn from their respective distributions, with a range of 2 to 10 replicate measurements. As shown in Figure @fig:errors, the error in the estimated
+
+![(left) Error between estimated fold change as a function of the number of measurements. (right) Variance of the error from left plot.](./figures/errors.png){#fig:errors}
 
 key points:
 
-- result: variance in error (modelled mean - real mean) decreases with increasing replicate measurements.
+- result: variance in error (modeled mean - real mean) decreases with increasing replicate measurements.
 - n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
 - in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
@@ -133,13 +131,13 @@ key points:
 
 In order to investigate how the number of replicates affected the accuracy, we simulated experimental runs of 100 samples with varying numbers replicate measurements (n=2 to n=20). For each `n`, 20 experimental runs were simulated.
 
-As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls in the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=YYYYYY` replicates, the accurate HPD fraction falls in the 93-98% reange. This means that one can reduce by 5- to 6-fold the number of errors measured as compared with the bare minimum of `n=2` replicates.
+As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls around the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=5` replicates, the accurate HPD fraction falls around the 85-90% range. Roughly doubling the number of samples decreases the inaccurate fraction by up to 3-fold. Following the law of diminishing marginal returns, additional accuracy can be gained, but at a cost of increasing sample sizes.
 
 ![Accuracy of 95% HPD as a function of number of replicate samples taken.](./figures/accuracy.pdf){#fig:accuracy}
 
 ## Bayesian Z- and Z'-factors
 
-This approach provides 95% HPDs on the Z- and Z'-factors.
+Z-factors are often used in HT assays to determine, given a 
 
 ## Simulated outlier plates with systematic error on the entire plate.
 
