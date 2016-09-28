@@ -123,7 +123,7 @@ We first considered how the number of replicate measurements per sample affected
 
 key points:
 
-- result: variance in error (modelled mean - real mean) decreases with increasing replicate measurements.
+- result: variance in error (modeled mean - real mean) decreases with increasing replicate measurements.
 - n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
 - in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
