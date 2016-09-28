@@ -107,10 +107,6 @@ Likewise, the Z- and Z'-factors and their distributional uncertainty may be comp
 
 $$ Z = 1 - \frac{3\sigma_{s} + 3\sigma_{b}}{|\mu_{s} - \mu_{b}|} $$
 
-## Simulated Data
-
-We used simulation data in our evaluation of the method.
-
 ## Code & Data
 
 All code are available as Python scripts and Jupyter notebooks. The archived version used in this publication is released on Zenodo (#TODO), while the source code (including for the manuscript) can be found on [GitHub](^github).
