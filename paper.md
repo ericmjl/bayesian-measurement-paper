@@ -115,17 +115,11 @@ All code for simulation and analysis are available as Python scripts and Jupyter
 
 # Results
 
-## Modelled Error in estimate as function of number of replicates
+## Modelled error in estimate as function of number of replicates
 
 We first considered how the number of replicate measurements per sample affected our ability to accurately measure the true fold change value. We simulated 5000 unique genotypes, each with a different `mu` and `sigma` drawn from their respective distributions, with a range of 2 to 10 replicate measurements. As shown in Figure @fig:errors, the error in the estimated fold changes is centred around zero regardless of the number of replicate measurements, but the variation in this error decreases with increasing replicate measurements.
 
 ![(left) Error between estimated fold change as a function of the number of measurements. (right) Variance of the error from left plot.](./figures/errors.png){#fig:errors}
-
-key points:
-
-- result: variance in error (modeled mean - real mean) decreases with increasing replicate measurements.
-- n=2 or n=3 might not be the best thing to do, especially if uninformative priors are used.
-- in general, fold change estimate precision increases with number of samples; also, variation in error decreases.
 
 ## Accuracy as a function of number of replicates
 
