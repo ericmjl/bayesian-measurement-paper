@@ -131,7 +131,7 @@ key points:
 
 In order to investigate how the number of replicates affected the accuracy, we simulated experimental runs of 100 samples with varying numbers replicate measurements (n=2 to n=20). For each `n`, 20 experimental runs were simulated.
 
-As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls in the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=YYYYYY` replicates, the accurate HPD fraction falls in the 93-98% reange. This means that one can reduce by 5- to 6-fold the number of errors measured as compared with the bare minimum of `n=2` replicates.
+As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fraction of actual values inside the posterior density's 95% HPD, falls around the 70-75% range. This means that about 25% of the final posterior 95% HPDs do not encompass the actual value. By contrast, by using `n=5` replicates, the accurate HPD fraction falls around the 85-90% range. Roughly doubling the number of samples decreases the inaccurate fraction by up to 3-fold. Following the law of diminishing marginal returns, additional accuracy can be gained, but at a cost of increasing sample sizes.
 
 ![Accuracy of 95% HPD as a function of number of replicate samples taken.](./figures/accuracy.pdf){#fig:accuracy}
 
