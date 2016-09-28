@@ -137,7 +137,7 @@ As shown in Figure @fig:accuracy, the baseline accuracy rate, as measured by fra
 
 ## Bayesian Z- and Z'-factors
 
-This approach provides 95% HPDs on the Z- and Z'-factors.
+Z-factors are often used in HT assays to determine, given a 
 
 ## Simulated outlier plates with systematic error on the entire plate.
 
