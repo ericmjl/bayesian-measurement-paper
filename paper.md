@@ -9,8 +9,10 @@ author:
   affiliation: MIT
 - name: Jonathan A. Runstadler
   affiliation: MIT
-target_journal: pnas, plos_comp_bio, biostatistics, plos_one
+target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
 toc: True
+abstract: |
+  Duplicate or triplicate experimental replicates are commonplace in the high throughput literature. However, it has not been tested whether this is statistically defensible or not. To address this issue, we outline a generic Bayesian framework for analyzing high throughput measurement data, provide posterior densities for statistical parameters used in the evaluation of the data, and use statistical simulations to show that a small increase in replicate experiments can greatly improve accuracy in measurement.
 ---
 
 # Abstract
