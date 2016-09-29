@@ -11,18 +11,11 @@ author:
   affiliation: MIT
 target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
 toc: True
-abstract: |
-  Duplicate or triplicate experimental replicates are commonplace in the high throughput literature. However, it has not been tested whether this is statistically defensible or not. To address this issue, we outline a generic Bayesian framework for analyzing high throughput measurement data, provide posterior densities for statistical parameters used in the evaluation of the data, and use statistical simulations to show that a small increase in replicate experiments can greatly improve accuracy in measurement.
 ---
 
 # Abstract
 
-key points:
-
-- describe a simple and accessible framework for molecular HT analysis that is sorely missing from the literature. covers the following:
-    - Bayesian estimation of fold changes relative to some control, with decision rule for a hit.
-- approach: rather than analytical, use probabilistic programming, with approx. inference tools used.
-- accompanying software that analyzes fold change data in an accessible fashion (?)
+Duplicate or triplicate experimental replicates are commonplace in the high throughput literature. However, it has not been tested whether this is statistically defensible or not. To address this issue, we outline a generic Bayesian framework for analyzing high throughput measurement data, provide posterior densities for statistical parameters used in the evaluation of the data, and use statistical simulations to show that a small increase in replicate experiments can greatly improve accuracy in measurement.
 
 # Introduction
 
