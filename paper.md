@@ -10,7 +10,6 @@ author:
 - name: Jonathan A. Runstadler
   affiliation: MIT
 target_journal: pnas, plos_comp_bio, biostatistics, plos_one
-template: default.latex
 toc: True
 ---
 
