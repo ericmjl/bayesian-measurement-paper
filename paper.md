@@ -133,6 +133,16 @@ Z-factors are often used in HT assays to determine, given the data, whether a pa
 
 The actionable consequences of these Z-value distributions depends on the experimental context. There may be scenarios where downstream experimentation is expensive, and only "true hits" should be tested; in this case, the "probable large separation" samples may be chosen for exclusion, helping to reduce costs. On the other hand, if downstream experimentation is cheap, and it is desirable to have a large set of samples to be processed further, then samples in the "probable small separation" may be included in downstream testing, helping to reduce false negatives. The truism remains: statistics does not replace human judgment of the value of a sample, but can serve as a valuable tool in the decision-making process.
 
+## Bayesian credible intervals are interpretable, robust to outliers, and better account for data range.
+
+Bayesian 95% highest posterior density intervals (HPDIs) are able to better model and capture the range of credible values, given the data. 95% confidence intervals (CIs), in contrast are calculated according to the formula:
+
+$$ CI = Z_{0.95}\frac{\hat{\sigma}}{\sqrt{n}} $$ {#eq:ci}
+
+A common practice in the life sciences is to report mean ± standard error of the mean (SEM). Part of this is borne out of the convenience in computing these values using statistical software, and part of may be motivated by the desire to display error bars that show minimal overlap with controls. As shown in Figure @fig:range-estimates, the SEM grossly under-represents the variation in the data. On the other hand, Bayesian and frequentist 95% confidence intervals much more readily capture the data variation. 
+
+![Bayesian, frequentist 95% confidence intervals, and error bar widths based on SEM.](./figures/range-estimates.pdf){#fig:range-estimates}
+
 ## Simulated outlier plates with systematic error on the entire plate.
 
 ## Simulated outlier wells with random dropout.
