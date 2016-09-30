@@ -2,13 +2,15 @@
 title: Simple Bayesian Analysis of High Throughput Biological Measurement Data
 author:
 - name: Eric J. Ma
-  affiliation: MIT
+  affiliation: Department of Biological Engineering, MIT
 - name: Islam T. M. Hussein
-  affiliation: MIT
+  affiliation: Department of Biological Engineering, MIT
 - name: Vivian J. Zhong
-  affiliation: MIT
+  affiliation: Department of Biological Engineering, MIT
+- name: Christopher Bandoro
+  affiliation: Microbiology Program, MIT
 - name: Jonathan A. Runstadler
-  affiliation: MIT
+  affiliation: Department of Biological Engineering, MIT
 target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
 toc: True
 ---
