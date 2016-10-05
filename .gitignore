@@ -104,3 +104,7 @@ notebooks/bandoro-microbiome-fold-forestplot.pdf
 notebooks/bandoro-microbiome-summary.csv
 
 notebooks/bandoro-microbiome-traceplot.pdf
+
+notebooks/bandoro-microbiome-fold_change-forestplot.pdf
+
+notebooks/bandoro-microbiome-zfactor-forestplot.pdf
