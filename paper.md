@@ -13,6 +13,9 @@ author:
   affiliation: Department of Biological Engineering, MIT
 target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
 toc: True
+header-includes:
+- \usepackage[left]{lineno}
+- \linenumbers
 ---
 
 # Abstract
