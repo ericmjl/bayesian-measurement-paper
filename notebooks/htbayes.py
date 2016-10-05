@@ -81,6 +81,7 @@ def run_model(model, n_steps=100000):
 
     return trace
 
+
 def plot_diagrams(trace, filename, sample_names, baseline_name):
     prefix = filename.split('.')[0]
     pm.traceplot(trace)
@@ -89,11 +90,16 @@ def plot_diagrams(trace, filename, sample_names, baseline_name):
     pm.forestplot(trace, ylabels=sorted(sample_names), varnames=['fold'])
     plt.savefig('{0}-fold-forestplot.pdf'.format(prefix), bbox_inches='tight')
 
-    pm.forestplot(trace, varnames=['z_factor'], xrange=(-1, 1), vline=0.5, ylabels=sorted(set(sample_names).difference([baseline_name])))
-    plt.savefig('{0}-zfactor-forestplot.pdf'.format(prefix), bbox_inches='tight')
+    pm.forestplot(trace, varnames=['z_factor'], xrange=(-1, 1), vline=0.5,
+                  ylabels=sorted(set(sample_names)
+                                 .difference([baseline_name])))
+    plt.savefig('{0}-zfactor-forestplot.pdf'.format(prefix),
+                bbox_inches='tight')
 
-    pm.forestplot(trace, varnames=['fold_change'], ylabels=sorted(set(sample_names)))
-    plt.savefig('{0}-fold_change-forestplot.pdf'.format(prefix), bbox_inches='tight')
+    pm.forestplot(trace, varnames=['fold_change'],
+                  ylabels=sorted(set(sample_names)))
+    plt.savefig('{0}-fold_change-forestplot.pdf'.format(prefix),
+                bbox_inches='tight')
 
     df_summary = pm.df_summary(trace)
     df_summary.to_csv('{0}-summary.csv'.format(prefix))
