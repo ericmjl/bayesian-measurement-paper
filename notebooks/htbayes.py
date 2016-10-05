@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 @click.command()
 @click.option('--filename', default='data.csv',
               help='File name of the data in CSV format.')
