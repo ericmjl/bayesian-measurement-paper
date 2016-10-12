@@ -10,7 +10,7 @@ author:
 - name: Christopher Bandoro
   affiliation: Microbiology Program, MIT
 - name: Jonathan A. Runstadler
-  affiliation: Department of Biological Engineering, MIT
+  affiliation: Department of Biological Engineering and Division of Comparative Medicine, MIT
 target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
 toc: True
 header-includes:
