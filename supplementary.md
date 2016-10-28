@@ -29,7 +29,7 @@ Using this experimental setup ensures that batch effects are accounted for in th
 
 ## Bayesian Hierarchical Model
 
-With this data on hand, we now consider the Bayesian hierarchical model. This model is an extension of the BEST model, in which more than one "treatment" is considered.
+With this data on hand, we now consider the Bayesian hierarchical model. This model is an extension of the BEST model [@Kruschke:2013jy], in which more than one "treatment" is considered. Each treatment is considered to be independent of other treatments.
 
 We assume that the fold changes relative to blank are drawn from a uniform distribution from 10^-10^ to value `u` (+@eq:fold), essentially behaving as a flat positive-valued prior. The lower limit is set to an infinitesimally small value, allowing for uncertainty in the blank measurement. In order to use the data to estimate the upper limit of detection, we place a positive real-valued Exponential prior on it +@eq:upper.
 
