@@ -62,6 +62,7 @@ def make_model(n_genotypes, data, indices):
     with pm.Model() as model:
         # Hyperpriors
         upper = pm.Exponential('upper', lam=0.05)
+        # nu = pm.Uniform('nu', lower=0, upper=1000)
         # lower = pm.Exponential('lower', lam=1)
 
         # "fold", which is the estimated fold change.
@@ -70,13 +71,16 @@ def make_model(n_genotypes, data, indices):
         # Assume that data have heteroskedastic (i.e. variable) error but are drawn from the same distribution
         # sigma = pm.Gamma('sigma', alpha=1, beta=1, shape=n_genotypes+2)
         sigma = pm.HalfCauchy('sigma', beta=1, shape=n_genotypes+2)
+        # lam = pm.Deterministic('lam', 1 / sigma)
 
         # Model prediction
         mu = fold[indices]
         sig = sigma[indices]
 
         # Data likelihood
-        like = pm.Normal('like', mu=mu, sd=sig, observed=data)
+        # like = pm.Normal('like', mu=mu, sd=sig, observed=data)
+        like = pm.Cauchy('like', alpha=mu, beta=sig, observed=data)
+        # like = pm.StudentT('like', nu=nu, mu=mu, lam=sig, observed=data)
 
         # Compute Z-factors relative to positive ctrl.
         z_factor = pm.Deterministic('z_factor', 1 - (3 * sigma[:-1] + 3 * sigma[-1]) / np.abs(fold[:-1] - fold[-1]))
