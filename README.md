@@ -100,3 +100,9 @@ The interpretation of the Z-factors can be found in the [original reference](htt
 The data here are from a colleague Christopher Bandoro (MIT Microbiology), who has kindly agreed for the data to be used as a test case. I intentionally leave out any interpretation of the data in the context of his work, as it is intended for publication elsewhere. The focus here is on the statistical modelling. Each of his samples here have had 4 replicate measurements taken over two experimental runs. The result is the following plot:
 
 ![Chris' data](./examples/bandoro-microbiome-summary_plot.png)
+
+A few points of note:
+
+1. Outliers are taken care of because of the use of the Students T distribution.
+1. We can say what the "most credible" values of the normalized % GFP are, because we've gone Bayesian.
+1. Uncertainty in the mean value, given the data, is accounted for as well.
