@@ -134,7 +134,7 @@ def plot_diagrams(trace, filename, baseline_name, output_col,
     summary_stats['mean'].plot(rot=90, ls='', ax=ax, yerr=[iqr_low, iqr_high],
                                elinewidth=4, color='red')
     sns.swarmplot(data=data, x=sample_col, y=output_col,
-                  orient='v', ax=ax)
+                  orient='v', ax=ax, alpha=0.5)
     plt.xticks(rotation='vertical')
     plt.ylabel(output_col)
     plt.savefig('{0}-summary_plot.pdf'.format(prefix), bbox_inches='tight')

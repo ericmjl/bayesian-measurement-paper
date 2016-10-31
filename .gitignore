@@ -99,18 +99,20 @@ figures/accuracy.pdf
 
 figures/accuracy.png
 
-notebooks/bandoro-microbiome-fold-forestplot.pdf
+*-fold-forestplot.pdf
 
-notebooks/bandoro-microbiome-summary.csv
+*-summary.csv
 
-notebooks/bandoro-microbiome-traceplot.pdf
+*-traceplot.pdf
 
-notebooks/bandoro-microbiome-fold_change-forestplot.pdf
+*-fold_change-forestplot.pdf
 
-notebooks/bandoro-microbiome-zfactor-forestplot.pdf
+*-zfactor-forestplot.pdf
 
-notebooks/bandoro-microbiome-Normalized % GFP-forestplot.pdf
-
-notebooks/bandoro-microbiome-summary_plot.pdf
+*-Normalized % GFP-forestplot.pdf
 
 supplementary.pdf
+
+examples/data-output-forestplot.pdf
+
+examples/data-summary_plot.pdf
