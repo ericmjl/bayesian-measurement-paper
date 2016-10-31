@@ -11,7 +11,7 @@ author:
   affiliation: Microbiology Program, MIT
 - name: Jonathan A. Runstadler
   affiliation: Department of Biological Engineering and Division of Comparative Medicine, MIT
-target_journal: pnas, nature_biotech, plos_comp_bio, biostatistics, plos_one
+target_journal: peerj_cs, plos_one
 toc: True
 header-includes:
 - \usepackage[left]{lineno}
