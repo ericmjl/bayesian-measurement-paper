@@ -46,7 +46,15 @@ If you can't remember what the arguments are, at the command line prompt, type:
 
 ```
 $ python htbayes.py --help
-```
+Usage: htbayes.py [OPTIONS]
+
+Options:
+  --filename TEXT       File name of the data in CSV format.
+  --output_col TEXT     Name of column that contains data.
+  --sample_col TEXT     Name of column that contains sample names.
+  --baseline_name TEXT  Name of positive control in sample names column.
+  --n_steps INTEGER     Number of iterations for ADVI.
+  --help                Show this message and exit.```
 
 The sample data follows the default data specification that `htbayes` accepts, which is namely:
 
