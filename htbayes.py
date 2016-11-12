@@ -18,12 +18,15 @@ import seaborn as sns
               help='Number of iterations for ADVI.')
 def main(filename, sample_col, baseline_name, n_steps, output_col):
     data = load_data(filename)
-    data, sample_names = convert_to_indices(data, sample_col)
-    data = data.sort_values(by='indices')
-    model = build_model(sample_names, data, baseline_name, output_col)
-    trace = run_model(model, n_steps)
-    plot_diagrams(trace, filename, baseline_name, output_col,
-                  data, sample_col)
+    # data, sample_names = convert_to_indices(data, sample_col)
+    # data = data.sort_values(by='indices')
+    # model = build_model(sample_names, data, baseline_name, output_col)
+    # trace = run_model(model, n_steps)
+    # plot_diagrams(trace, filename, baseline_name, output_col,
+    #               data, sample_col)
+    b = BEST(data, sample_col, output_col, baseline_name)
+    b.fit()
+    b.plot_posterior()
 
 
 def load_data(filename):
@@ -31,118 +34,148 @@ def load_data(filename):
     return data
 
 
-def convert_to_indices(data, sample_col):
-    sample_names = dict()
-    for i, name in enumerate(list(np.unique(data[sample_col].values))):
-        print('Sample name {0} has the index {1}'.format(name, i))
-        sample_names[name] = i
-    data['indices'] = data[sample_col].apply(lambda x: sample_names[x])
+class BEST(object):
+    """BEST Model, based on Kruschke (2013).
 
-    return data, sample_names
+    Parameters
+    ----------
+    data : pandas DataFrame
+        A pandas dataframe which has the following data:
+        - Each row is one replicate measurement.
+        - There is a column that records the treatment name.
+        - There is a column that records the measured value for that replicate.
 
+    sample_col : str
+        The name of the column containing sample names.
 
-def build_model(sample_names, data, baseline_name, output_col):
+    output_col : str
+        The name of the column containing values to estimate.
 
-    baseline_idx = sample_names[baseline_name]
-    other_idx = sorted(list(set(data['indices']).difference([baseline_idx])))
+    baseline_name : str
+        The name of the "control" or "baseline".
 
-    with pm.Model() as model:
-        # Hyperpriors
-        upper = pm.Exponential('upper', lam=0.05)
-        nu = pm.Exponential('nu_minus_one', 1/29.) + 1
+    Output
+    ------
+    model : PyMC3 model
+        Returns the BEST model containing
+    """
+    def __init__(self, data, sample_col, output_col, baseline_name):
+        super(BEST, self).__init__()
+        self.data = data
+        self.sample_col = sample_col
+        self.output_col = output_col
+        self.baseline_name = baseline_name
+        self.trace = None
 
-        # "fold", which is the estimated fold change.
-        fold = pm.Uniform('fold', lower=1E-10,
-                          upper=upper, shape=len(sample_names))
+        self._convert_to_indices()
 
-        # Assume that data have heteroskedastic (i.e. variable) error but are
-        # drawn from the same HalfCauchy distribution.
-        sigma = pm.HalfCauchy('sigma', beta=1, shape=len(sample_names))
+    def _convert_to_indices(self):
+        """
+        Adds the "indices" column to self.data (DataFrame). This is necessary
+        for the simplified model specification in the "fit" function below.
+        """
+        sample_names = dict()
+        for i, name in enumerate(
+                list(np.unique(self.data[self.sample_col].values))):
+            print('Sample name {0} has the index {1}'.format(name, i))
+            sample_names[name] = i
+        self.data['indices'] = self.data[self.sample_col].apply(
+            lambda x: sample_names[x])
 
-        # Model prediction
-        mu = fold[data['indices']]
-        sig = sigma[data['indices']]
+    def fit(self, n_steps=500000):
+        """
+        Creates a Bayesian Estimation model for replicate measurements of
+        treatment(s) vs. control.
 
-        # Data likelihood
-        like = pm.StudentT('like', nu=nu, mu=mu, sd=sig**-2,
-                           observed=data[output_col])
+        Parameters
+        ----------
+        n_steps : int
+            The number of steps to run ADVI.
+        """
 
-        z_factor = pm.Deterministic('z_factor',
-                                    (1 - ((sigma[other_idx] +
-                                          sigma[baseline_idx]))
-                                     / np.abs(fold[other_idx] -
-                                              fold[baseline_idx])))
+        sample_names = set(self.data[self.sample_col].values)
 
-        fold_change = pm.Deterministic('fold_change',
-                                       fold / fold[baseline_idx])
+        mean_test = self.data.groupby('indices').mean()[self.output_col].values
+        sd_test = self.data.groupby('indices').std()[self.output_col].values
 
-    return model
+        with pm.Model() as model:
+            # Hyperpriors
+            upper = pm.Exponential('upper', lam=0.05)
+            nu = pm.Exponential('nu_minus_one', 1/29.) + 1
 
-def run_model(model, n_steps=100000):
-    with model:
-        params = pm.variational.advi(n=n_steps)
-        trace = pm.variational.sample_vp(params, draws=2000)
+            # "fold", which is the estimated fold change.
+            fold = pm.Uniform('fold', lower=1E-10, upper=upper,
+                              shape=len(sample_names), testval=mean_test)
 
-    return trace
+            # Assume that data have heteroskedastic (i.e. variable) error but
+            # are drawn from the same HalfCauchy distribution.
+            sigma = pm.HalfCauchy('sigma', beta=1, shape=len(sample_names),
+                                  testval=sd_test)
 
+            # Model prediction
+            mu = fold[self.data['indices']]
+            sig = sigma[self.data['indices']]
 
-def plot_diagrams(trace, filename, baseline_name, output_col,
-                  data, sample_col):
+            # Data likelihood
+            like = pm.StudentT('like', nu=nu, mu=mu, sd=sig**-2,
+                               observed=self.data[self.output_col])
 
-    # Prep variables for below.
-    sample_names = sorted(set(data[sample_col].values))
-    prefix = filename.split('.')[0]
+            # Sample from posterior
+            params = pm.variational.advi(n=n_steps)
+            trace = pm.variational.sample_vp(params, draws=2000)
 
-    # Make traceplot
-    pm.traceplot(trace)
-    plt.savefig('{0}-traceplot.pdf'.format(prefix), bbox_inches='tight')
+        self.trace = trace
+        self.params = params
+        self.model = model
 
-    # Make forestplot
-    pm.forestplot(trace, ylabels=sample_names, varnames=['fold'])
-    plt.savefig('{0}-{1}-forestplot.pdf'.format(prefix, output_col),
-                bbox_inches='tight')
+    def plot_posterior(self, rotate_xticks=False):
+        """
+        Plots a swarm plot of the data overlaid on top of the 95% HPD and IQR
+        of the posterior distribution.
+        """
 
-    # Make forestplot of Z-factors
-    pm.forestplot(trace, varnames=['z_factor'], xrange=(-1, 1), vline=0.5,
-                  ylabels=sorted(set(sample_names)
-                                 .difference([baseline_name])))
-    plt.savefig('{0}-zfactor-forestplot.pdf'.format(prefix),
-                bbox_inches='tight')
+        # Make summary plot #
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
 
-    # Make forestplot of fold changes
-    pm.forestplot(trace, varnames=['fold_change'],
-                  ylabels=sample_names)
-    plt.savefig('{0}-fold_change-forestplot.pdf'.format(prefix),
-                bbox_inches='tight')
+        # 1. Get the lower error and upper errorbars for 95% HPD and IQR.
+        lower, lower_q, upper_q, upper = np.percentile(self.trace['fold'],
+                                                       [2.5, 25, 75, 97.5],
+                                                       axis=0)
+        summary_stats = pd.DataFrame()
+        summary_stats['mean'] = self.trace['fold'].mean(axis=0)
+        err_low = summary_stats['mean'] - lower
+        err_high = upper - summary_stats['mean']
+        iqr_low = summary_stats['mean'] - lower_q
+        iqr_high = upper_q - summary_stats['mean']
 
-    # Make summary plot #
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
+        # 2. Plot the swarmplot and errorbars.
+        summary_stats['mean'].plot(ls='', ax=ax,
+                                   yerr=[err_low, err_high])
+        summary_stats['mean'].plot(ls='', ax=ax,
+                                   yerr=[iqr_low, iqr_high],
+                                   elinewidth=4, color='red')
+        sns.swarmplot(data=self.data, x=self.sample_col, y=self.output_col,
+                      ax=ax, alpha=0.5)
 
-    # 1. Get the lower error and upper errorbars for 95% HPD and IQR.
-    lower, lower_q, upper_q, upper = np.percentile(trace['fold'],
-                                                   [2.5, 25, 75, 97.5], axis=0)
-    summary_stats = pd.DataFrame()
-    summary_stats['mean'] = trace['fold'].mean(axis=0)
-    err_low = summary_stats['mean'] - lower
-    err_high = upper - summary_stats['mean']
-    iqr_low = summary_stats['mean'] - lower_q
-    iqr_high = upper_q - summary_stats['mean']
+        if rotate_xticks:
+            print('rotating xticks')
+            plt.xticks(rotation='vertical')
+        plt.ylabel(self.output_col)
 
-    # 2. Plot the swarmplot and errorbars.
-    summary_stats['mean'].plot(rot=90, ls='', ax=ax, yerr=[err_low, err_high])
-    summary_stats['mean'].plot(rot=90, ls='', ax=ax, yerr=[iqr_low, iqr_high],
-                               elinewidth=4, color='red')
-    sns.swarmplot(data=data, x=sample_col, y=output_col,
-                  orient='v', ax=ax, alpha=0.5)
-    plt.xticks(rotation='vertical')
-    plt.ylabel(output_col)
-    plt.savefig('{0}-summary_plot.pdf'.format(prefix), bbox_inches='tight')
+        return fig
 
-    # Make summary dataframe.
-    df_summary = pm.df_summary(trace)
-    df_summary.to_csv('{0}-summary.csv'.format(prefix))
+    def plot_elbo(self):
+        """
+        Plots the ELBO values to help check for convergence.
+        """
+        fig = plt.figure()
+        plt.plot(-np.log10(-self.params.elbo_vals))
 
+        return fig
+
+    def summary_stats(self):
+        return pm.summary_df(self.trace)
 
 if __name__ == '__main__':
     main()
