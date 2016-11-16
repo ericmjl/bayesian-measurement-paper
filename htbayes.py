@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import logging
 
 @click.command()
 @click.option('--filename', default='data.csv',
@@ -77,7 +78,7 @@ class BEST(object):
         sample_names = dict()
         for i, name in enumerate(
                 list(np.unique(self.data[self.sample_col].values))):
-            print('Sample name {0} has the index {1}'.format(name, i))
+            logging.info('Sample name {0} has the index {1}'.format(name, i))
             sample_names[name] = i
         self.data['indices'] = self.data[self.sample_col].apply(
             lambda x: sample_names[x])
@@ -159,7 +160,7 @@ class BEST(object):
                       ax=ax, alpha=0.5)
 
         if rotate_xticks:
-            print('rotating xticks')
+            logging.info('rotating xticks')
             plt.xticks(rotation='vertical')
         plt.ylabel(self.output_col)
 
