@@ -122,11 +122,14 @@ class BEST(object):
                                observed=self.data[self.output_col])
 
             # Sample from posterior
-            params = pm.variational.advi(n=n_steps)
-            trace = pm.variational.sample_vp(params, draws=2000)
+            v_params = pm.variational.advi(n=n_steps)
+            start = pm.variational.sample_vp(v_params, 1)[0]
+            cov = np.power(model.dict_to_array(v_params.stds), 2)
+            step = pm.NUTS(scaling=cov, is_cov=True)
+            logging.info('Starting MCMC sampling')
+            trace = pm.sample(step=step, start=start, draws=2000)
 
         self.trace = trace
-        self.params = params
         self.model = model
 
     def plot_posterior(self, rotate_xticks=False):
