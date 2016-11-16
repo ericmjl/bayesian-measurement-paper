@@ -96,8 +96,9 @@ class BEST(object):
 
         sample_names = set(self.data[self.sample_col].values)
 
-        mean_test = self.data.groupby('indices').mean()[self.output_col].values
-        sd_test = self.data.groupby('indices').std()[self.output_col].values
+        # mean_test = self.data.groupby('indices').mean()[self.output_col].values
+        # sd_test = self.data.groupby('indices').std()[self.output_col].values
+        # print(mean_test, sd_test)
 
         with pm.Model() as model:
             # Hyperpriors
@@ -106,12 +107,11 @@ class BEST(object):
 
             # "fold", which is the estimated fold change.
             fold = pm.Uniform('fold', lower=1E-10, upper=upper,
-                              shape=len(sample_names), testval=mean_test)
+                              shape=len(sample_names))
 
             # Assume that data have heteroskedastic (i.e. variable) error but
             # are drawn from the same HalfCauchy distribution.
-            sigma = pm.HalfCauchy('sigma', beta=1, shape=len(sample_names),
-                                  testval=sd_test)
+            sigma = pm.HalfCauchy('sigma', beta=1, shape=len(sample_names))
 
             # Model prediction
             mu = fold[self.data['indices']]
