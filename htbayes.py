@@ -83,7 +83,7 @@ class BEST(object):
         self.data['indices'] = self.data[self.sample_col].apply(
             lambda x: sample_names[x])
 
-    def fit(self, n_steps=500000):
+    def fit(self, n_steps=100000):
         """
         Creates a Bayesian Estimation model for replicate measurements of
         treatment(s) vs. control.
