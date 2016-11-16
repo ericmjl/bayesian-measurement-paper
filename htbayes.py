@@ -62,7 +62,7 @@ class BEST(object):
     """
     def __init__(self, data, sample_col, output_col, baseline_name):
         super(BEST, self).__init__()
-        self.data = data
+        self.data = data.sort_values(by=sample_col)
         self.sample_col = sample_col
         self.output_col = output_col
         self.baseline_name = baseline_name
