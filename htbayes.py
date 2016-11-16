@@ -163,7 +163,7 @@ class BEST(object):
             plt.xticks(rotation='vertical')
         plt.ylabel(self.output_col)
 
-        return fig
+        return fig, ax
 
     def plot_elbo(self):
         """
