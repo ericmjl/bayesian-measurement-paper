@@ -143,7 +143,7 @@ class BEST(object):
         ax = fig.add_subplot(111)
 
         # 1. Get the lower error and upper errorbars for 95% HPD and IQR.
-        lower, lower_q, upper_q, upper = np.percentile(self.trace['fold'],
+        lower, lower_q, upper_q, upper = np.percentile(self.trace['fold'][500:],
                                                        [2.5, 25, 75, 97.5],
                                                        axis=0)
         summary_stats = pd.DataFrame()
