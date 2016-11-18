@@ -106,8 +106,7 @@ class BEST(object):
             nu = pm.Exponential('nu_minus_one', 1/29.) + 1
 
             # "fold", which is the estimated fold change.
-            fold = pm.Uniform('fold', lower=1E-10, upper=upper,
-                              shape=len(sample_names))
+            fold = pm.Flat('fold', shape=len(sample_names))
 
             # Assume that data have heteroskedastic (i.e. variable) error but
             # are drawn from the same HalfCauchy distribution.
