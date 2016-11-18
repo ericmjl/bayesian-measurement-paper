@@ -102,7 +102,7 @@ class BEST(object):
 
         with pm.Model() as model:
             # Hyperpriors
-            upper = pm.Exponential('upper', lam=0.05)
+            # upper = pm.Exponential('upper', lam=0.05)
             nu = pm.Exponential('nu_minus_one', 1/29.) + 1
 
             # "fold", which is the estimated fold change.
