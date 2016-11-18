@@ -122,11 +122,12 @@ class BEST(object):
 
             # Sample from posterior
             v_params = pm.variational.advi(n=n_steps)
-            start = pm.variational.sample_vp(v_params, 1)[0]
-            cov = np.power(model.dict_to_array(v_params.stds), 2)
-            step = pm.NUTS(scaling=cov, is_cov=True)
-            logging.info('Starting MCMC sampling')
-            trace = pm.sample(step=step, start=start, draws=2000)
+            trace = pm.variational.sample_vp(v_params, draws=2000)
+            # start = pm.variational.sample_vp(v_params, 1)[0]
+            # cov = np.power(model.dict_to_array(v_params.stds), 2)
+            # step = pm.NUTS(scaling=cov, is_cov=True)
+            # logging.info('Starting MCMC sampling')
+            # trace = pm.sample(step=step, start=start, draws=2000)
 
         self.trace = trace
         self.model = model
