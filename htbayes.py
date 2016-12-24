@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import logging
 
+
 @click.command()
 @click.option('--filename', default='data.csv',
               help='File name of the data in CSV format.')
@@ -96,10 +97,6 @@ class BEST(object):
 
         sample_names = set(self.data[self.sample_col].values)
 
-        # mean_test = self.data.groupby('indices').mean()[self.output_col].values
-        # sd_test = self.data.groupby('indices').std()[self.output_col].values
-        # print(mean_test, sd_test)
-
         with pm.Model() as model:
             # Hyperpriors
             # upper = pm.Exponential('upper', lam=0.05)
@@ -142,15 +139,15 @@ class BEST(object):
         ax = fig.add_subplot(111)
 
         # 1. Get the lower error and upper errorbars for 95% HPD and IQR.
-        lower, lower_q, upper_q, upper = np.percentile(self.trace['fold'][500:],
-                                                       [2.5, 25, 75, 97.5],
-                                                       axis=0)
+        lower, low_q, upp_q, upper = np.percentile(self.trace['fold'][500:],
+                                                   [2.5, 25, 75, 97.5],
+                                                   axis=0)
         summary_stats = pd.DataFrame()
         summary_stats['mean'] = self.trace['fold'].mean(axis=0)
         err_low = summary_stats['mean'] - lower
         err_high = upper - summary_stats['mean']
-        iqr_low = summary_stats['mean'] - lower_q
-        iqr_high = upper_q - summary_stats['mean']
+        iqr_low = summary_stats['mean'] - low_q
+        iqr_high = upp_q - summary_stats['mean']
 
         # 2. Plot the swarmplot and errorbars.
         summary_stats['mean'].plot(ls='', ax=ax,
@@ -179,6 +176,7 @@ class BEST(object):
 
     def summary_stats(self):
         return pm.summary_df(self.trace)
+
 
 if __name__ == '__main__':
     main()
