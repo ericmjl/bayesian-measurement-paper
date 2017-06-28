@@ -110,8 +110,8 @@ class BEST(object):
             sigma = pm.HalfCauchy('sigma', beta=1, shape=len(sample_names))
 
             # Model prediction
-            mu = fold[self.data['indices']]
-            sig = sigma[self.data['indices']]
+            mu = fold[self.data['indices'].values]
+            sig = sigma[self.data['indices'].values]
 
             # Data likelihood
             like = pm.StudentT('like', nu=nu, mu=mu, sd=sig**-2,
